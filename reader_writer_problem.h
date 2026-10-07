@@ -1,0 +1,8 @@
+//
+// Created by vithurshan on 10/7/26.
+//
+
+#ifndef MUTUALEXCLUSION_READER_WRITER_PROBLEM_H
+#define MUTUALEXCLUSION_READER_WRITER_PROBLEM_H
+void readerWriterProblem();
+#endif //MUTUALEXCLUSION_READER_WRITER_PROBLEM_H

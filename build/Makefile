@@ -225,6 +225,30 @@ main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/main.c.s
 .PHONY : main.c.s
 
+reader_writer_problem.o: reader_writer_problem.c.o
+.PHONY : reader_writer_problem.o
+
+# target to build an object file
+reader_writer_problem.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/reader_writer_problem.c.o
+.PHONY : reader_writer_problem.c.o
+
+reader_writer_problem.i: reader_writer_problem.c.i
+.PHONY : reader_writer_problem.i
+
+# target to preprocess a source file
+reader_writer_problem.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/reader_writer_problem.c.i
+.PHONY : reader_writer_problem.c.i
+
+reader_writer_problem.s: reader_writer_problem.c.s
+.PHONY : reader_writer_problem.s
+
+# target to generate assembly for a file
+reader_writer_problem.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/reader_writer_problem.c.s
+.PHONY : reader_writer_problem.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -246,6 +270,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... reader_writer_problem.o"
+	@echo "... reader_writer_problem.i"
+	@echo "... reader_writer_problem.s"
 .PHONY : help
 
 

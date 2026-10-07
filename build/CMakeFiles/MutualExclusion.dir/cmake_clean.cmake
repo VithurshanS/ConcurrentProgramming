@@ -7,6 +7,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/MutualExclusion.dir/dining_philosopher.c.o.d"
   "CMakeFiles/MutualExclusion.dir/main.c.o"
   "CMakeFiles/MutualExclusion.dir/main.c.o.d"
+  "CMakeFiles/MutualExclusion.dir/reader_writer_problem.c.o"
+  "CMakeFiles/MutualExclusion.dir/reader_writer_problem.c.o.d"
   "MutualExclusion"
   "MutualExclusion.pdb"
 )

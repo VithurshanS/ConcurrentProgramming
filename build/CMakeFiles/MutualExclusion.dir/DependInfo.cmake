@@ -12,6 +12,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/vithurshan/CLionProjects/MutualExclusion/critical_section_problem.c" "CMakeFiles/MutualExclusion.dir/critical_section_problem.c.o" "gcc" "CMakeFiles/MutualExclusion.dir/critical_section_problem.c.o.d"
   "/home/vithurshan/CLionProjects/MutualExclusion/dining_philosopher.c" "CMakeFiles/MutualExclusion.dir/dining_philosopher.c.o" "gcc" "CMakeFiles/MutualExclusion.dir/dining_philosopher.c.o.d"
   "/home/vithurshan/CLionProjects/MutualExclusion/main.c" "CMakeFiles/MutualExclusion.dir/main.c.o" "gcc" "CMakeFiles/MutualExclusion.dir/main.c.o.d"
+  "/home/vithurshan/CLionProjects/MutualExclusion/reader_writer_problem.c" "CMakeFiles/MutualExclusion.dir/reader_writer_problem.c.o" "gcc" "CMakeFiles/MutualExclusion.dir/reader_writer_problem.c.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.
