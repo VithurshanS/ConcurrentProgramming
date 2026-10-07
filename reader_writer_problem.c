@@ -6,7 +6,7 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <time.h>
-#define WRITER_WAIT_FOR 100
+#define WRITER_WAIT_FOR 100000
 #define NUM_READERS 4
 #define NUM_WRITERS 4
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
@@ -55,16 +55,59 @@ void* writer(void* arg) {
     }
 }
 
+// mutex lock introduced to solve consistency issue write- read or write-write should not to be allowed so it destroyed the read parallelism
+pthread_mutex_t writer_lock = PTHREAD_MUTEX_INITIALIZER;
+void* reader_mutex_v1(void* arg) {
+    // Read from the database
+    int tid = (int)arg;
+    int iteration = ITERATION;
+    while (iteration-- > 0) {
+        pthread_mutex_lock(&writer_lock); //writer should not come when reader on its critical section but unfortunately it wiil apply to peer readers also
+        int a = db.account_A;
+        int b = db.account_B;
+        pthread_mutex_unlock(&writer_lock);
+        if (a + b != 1000) {
+            printf("Reader %d TORN READ BUG  detected: Account A = %d, Account B = %d\n",tid, a, b);
+            continue;
+        }
+        printf("Reader %d: Account A = %d, Account B = %d\n",tid, a, b);
+    }
+}
+
+void* writer_mutex_v1(void* arg) {
+    // Write to the database
+    int tid = (int)arg;
+    struct timespec ts;
+    ts.tv_sec = 0;
+    ts.tv_nsec = 10*WRITER_WAIT_FOR;
+    int iteration = ITERATION;
+    while (iteration-- > 0) {
+        // Simulate a write operation
+        pthread_mutex_lock(&writer_lock);
+        db.account_A += 100;
+        nanosleep(&ts, NULL);
+        db.account_B -= 100;
+        printf("Writer %d: Account A = %d, Account B = %d\n", tid, db.account_A, db.account_B);
+        pthread_mutex_unlock(&writer_lock); // we might expect that reader prints 600,400 but consistency maintainde
+        pthread_mutex_lock(&writer_lock);
+        db.account_B += 100;
+        nanosleep(&ts, NULL);
+        db.account_A -= 100;
+        printf("Writer %d: Account A = %d, Account B = %d\n", tid, db.account_A, db.account_B);
+        pthread_mutex_unlock(&writer_lock);
+    }
+}
+
 
 void readerWriterProblem() {
     pthread_t readers[NUM_READERS];
     pthread_t writers[NUM_WRITERS];
     for (int i=0;i<MAX(NUM_READERS, NUM_WRITERS);i++) {
         if (i < NUM_WRITERS) {
-            pthread_create(&writers[i], NULL, writer, (void*)i);
+            pthread_create(&writers[i], NULL, writer_mutex_v1, (void*)i);
         }
         if (i < NUM_READERS) {
-            pthread_create(&readers[i], NULL, reader, (void*)i);
+            pthread_create(&readers[i], NULL, reader_mutex_v1, (void*)i);
         }
 
     }
