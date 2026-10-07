@@ -1,0 +1,3 @@
+/home/vithurshan/CLionProjects/MutualExclusion/build/CMakeFiles/MutualExclusion.dir
+/home/vithurshan/CLionProjects/MutualExclusion/build/CMakeFiles/edit_cache.dir
+/home/vithurshan/CLionProjects/MutualExclusion/build/CMakeFiles/rebuild_cache.dir

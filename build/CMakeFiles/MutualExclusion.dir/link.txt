@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/MutualExclusion.dir/main.c.o CMakeFiles/MutualExclusion.dir/racecond.c.o -o MutualExclusion 
