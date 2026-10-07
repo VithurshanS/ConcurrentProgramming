@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.o.d"
   "CMakeFiles/MutualExclusion.dir/critical_section_problem.c.o"
   "CMakeFiles/MutualExclusion.dir/critical_section_problem.c.o.d"
+  "CMakeFiles/MutualExclusion.dir/dining_philosopher.c.o"
+  "CMakeFiles/MutualExclusion.dir/dining_philosopher.c.o.d"
   "CMakeFiles/MutualExclusion.dir/main.c.o"
   "CMakeFiles/MutualExclusion.dir/main.c.o.d"
   "MutualExclusion"

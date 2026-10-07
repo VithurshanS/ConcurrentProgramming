@@ -1,1 +1,1 @@
-/usr/bin/cc CMakeFiles/MutualExclusion.dir/main.c.o CMakeFiles/MutualExclusion.dir/critical_section_problem.c.o CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.o -o MutualExclusion 
+/usr/bin/cc CMakeFiles/MutualExclusion.dir/main.c.o CMakeFiles/MutualExclusion.dir/critical_section_problem.c.o CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.o CMakeFiles/MutualExclusion.dir/dining_philosopher.c.o -o MutualExclusion 

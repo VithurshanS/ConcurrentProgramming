@@ -177,6 +177,30 @@ critical_section_problem.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/critical_section_problem.c.s
 .PHONY : critical_section_problem.c.s
 
+dining_philosopher.o: dining_philosopher.c.o
+.PHONY : dining_philosopher.o
+
+# target to build an object file
+dining_philosopher.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/dining_philosopher.c.o
+.PHONY : dining_philosopher.c.o
+
+dining_philosopher.i: dining_philosopher.c.i
+.PHONY : dining_philosopher.i
+
+# target to preprocess a source file
+dining_philosopher.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/dining_philosopher.c.i
+.PHONY : dining_philosopher.c.i
+
+dining_philosopher.s: dining_philosopher.c.s
+.PHONY : dining_philosopher.s
+
+# target to generate assembly for a file
+dining_philosopher.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/dining_philosopher.c.s
+.PHONY : dining_philosopher.c.s
+
 main.o: main.c.o
 .PHONY : main.o
 
@@ -216,6 +240,9 @@ help:
 	@echo "... critical_section_problem.o"
 	@echo "... critical_section_problem.i"
 	@echo "... critical_section_problem.s"
+	@echo "... dining_philosopher.o"
+	@echo "... dining_philosopher.i"
+	@echo "... dining_philosopher.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
