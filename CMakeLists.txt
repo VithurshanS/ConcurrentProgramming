@@ -7,4 +7,6 @@ add_executable(MutualExclusion main.c
         critical_section_problem.c
         critical_section_problem.h
         bounded_buffer_problem.c
-        bounded_buffer_problem.h)
+        bounded_buffer_problem.h
+        dining_philosopher.c
+        dining_philosopher.h)
