@@ -83,33 +83,49 @@ CMakeFiles/MutualExclusion.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/MutualExclusion.dir/main.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/vithurshan/CLionProjects/MutualExclusion/main.c -o CMakeFiles/MutualExclusion.dir/main.c.s
 
-CMakeFiles/MutualExclusion.dir/racecond.c.o: CMakeFiles/MutualExclusion.dir/flags.make
-CMakeFiles/MutualExclusion.dir/racecond.c.o: /home/vithurshan/CLionProjects/MutualExclusion/racecond.c
-CMakeFiles/MutualExclusion.dir/racecond.c.o: CMakeFiles/MutualExclusion.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/vithurshan/CLionProjects/MutualExclusion/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/MutualExclusion.dir/racecond.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/MutualExclusion.dir/racecond.c.o -MF CMakeFiles/MutualExclusion.dir/racecond.c.o.d -o CMakeFiles/MutualExclusion.dir/racecond.c.o -c /home/vithurshan/CLionProjects/MutualExclusion/racecond.c
+CMakeFiles/MutualExclusion.dir/critical_section_problem.c.o: CMakeFiles/MutualExclusion.dir/flags.make
+CMakeFiles/MutualExclusion.dir/critical_section_problem.c.o: /home/vithurshan/CLionProjects/MutualExclusion/critical_section_problem.c
+CMakeFiles/MutualExclusion.dir/critical_section_problem.c.o: CMakeFiles/MutualExclusion.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/vithurshan/CLionProjects/MutualExclusion/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/MutualExclusion.dir/critical_section_problem.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/MutualExclusion.dir/critical_section_problem.c.o -MF CMakeFiles/MutualExclusion.dir/critical_section_problem.c.o.d -o CMakeFiles/MutualExclusion.dir/critical_section_problem.c.o -c /home/vithurshan/CLionProjects/MutualExclusion/critical_section_problem.c
 
-CMakeFiles/MutualExclusion.dir/racecond.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/MutualExclusion.dir/racecond.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/vithurshan/CLionProjects/MutualExclusion/racecond.c > CMakeFiles/MutualExclusion.dir/racecond.c.i
+CMakeFiles/MutualExclusion.dir/critical_section_problem.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/MutualExclusion.dir/critical_section_problem.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/vithurshan/CLionProjects/MutualExclusion/critical_section_problem.c > CMakeFiles/MutualExclusion.dir/critical_section_problem.c.i
 
-CMakeFiles/MutualExclusion.dir/racecond.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/MutualExclusion.dir/racecond.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/vithurshan/CLionProjects/MutualExclusion/racecond.c -o CMakeFiles/MutualExclusion.dir/racecond.c.s
+CMakeFiles/MutualExclusion.dir/critical_section_problem.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/MutualExclusion.dir/critical_section_problem.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/vithurshan/CLionProjects/MutualExclusion/critical_section_problem.c -o CMakeFiles/MutualExclusion.dir/critical_section_problem.c.s
+
+CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.o: CMakeFiles/MutualExclusion.dir/flags.make
+CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.o: /home/vithurshan/CLionProjects/MutualExclusion/bounded_buffer_problem.c
+CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.o: CMakeFiles/MutualExclusion.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/vithurshan/CLionProjects/MutualExclusion/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.o -MF CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.o.d -o CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.o -c /home/vithurshan/CLionProjects/MutualExclusion/bounded_buffer_problem.c
+
+CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/vithurshan/CLionProjects/MutualExclusion/bounded_buffer_problem.c > CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.i
+
+CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/vithurshan/CLionProjects/MutualExclusion/bounded_buffer_problem.c -o CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.s
 
 # Object files for target MutualExclusion
 MutualExclusion_OBJECTS = \
 "CMakeFiles/MutualExclusion.dir/main.c.o" \
-"CMakeFiles/MutualExclusion.dir/racecond.c.o"
+"CMakeFiles/MutualExclusion.dir/critical_section_problem.c.o" \
+"CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.o"
 
 # External object files for target MutualExclusion
 MutualExclusion_EXTERNAL_OBJECTS =
 
 MutualExclusion: CMakeFiles/MutualExclusion.dir/main.c.o
-MutualExclusion: CMakeFiles/MutualExclusion.dir/racecond.c.o
+MutualExclusion: CMakeFiles/MutualExclusion.dir/critical_section_problem.c.o
+MutualExclusion: CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.o
 MutualExclusion: CMakeFiles/MutualExclusion.dir/build.make
 MutualExclusion: CMakeFiles/MutualExclusion.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/vithurshan/CLionProjects/MutualExclusion/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable MutualExclusion"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/vithurshan/CLionProjects/MutualExclusion/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable MutualExclusion"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MutualExclusion.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

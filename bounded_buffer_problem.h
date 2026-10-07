@@ -1,0 +1,10 @@
+//
+// Created by vithurshan on 10/7/26.
+//
+
+#ifndef MUTUALEXCLUSION_BOUNDED_BUFFER_PROBLEM_H
+#define MUTUALEXCLUSION_BOUNDED_BUFFER_PROBLEM_H
+
+void produce_consume();
+
+#endif //MUTUALEXCLUSION_BOUNDED_BUFFER_PROBLEM_H

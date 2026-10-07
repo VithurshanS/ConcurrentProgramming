@@ -129,6 +129,54 @@ MutualExclusion/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/build
 .PHONY : MutualExclusion/fast
 
+bounded_buffer_problem.o: bounded_buffer_problem.c.o
+.PHONY : bounded_buffer_problem.o
+
+# target to build an object file
+bounded_buffer_problem.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.o
+.PHONY : bounded_buffer_problem.c.o
+
+bounded_buffer_problem.i: bounded_buffer_problem.c.i
+.PHONY : bounded_buffer_problem.i
+
+# target to preprocess a source file
+bounded_buffer_problem.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.i
+.PHONY : bounded_buffer_problem.c.i
+
+bounded_buffer_problem.s: bounded_buffer_problem.c.s
+.PHONY : bounded_buffer_problem.s
+
+# target to generate assembly for a file
+bounded_buffer_problem.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/bounded_buffer_problem.c.s
+.PHONY : bounded_buffer_problem.c.s
+
+critical_section_problem.o: critical_section_problem.c.o
+.PHONY : critical_section_problem.o
+
+# target to build an object file
+critical_section_problem.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/critical_section_problem.c.o
+.PHONY : critical_section_problem.c.o
+
+critical_section_problem.i: critical_section_problem.c.i
+.PHONY : critical_section_problem.i
+
+# target to preprocess a source file
+critical_section_problem.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/critical_section_problem.c.i
+.PHONY : critical_section_problem.c.i
+
+critical_section_problem.s: critical_section_problem.c.s
+.PHONY : critical_section_problem.s
+
+# target to generate assembly for a file
+critical_section_problem.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/critical_section_problem.c.s
+.PHONY : critical_section_problem.c.s
+
 main.o: main.c.o
 .PHONY : main.o
 
@@ -153,30 +201,6 @@ main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/main.c.s
 .PHONY : main.c.s
 
-racecond.o: racecond.c.o
-.PHONY : racecond.o
-
-# target to build an object file
-racecond.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/racecond.c.o
-.PHONY : racecond.c.o
-
-racecond.i: racecond.c.i
-.PHONY : racecond.i
-
-# target to preprocess a source file
-racecond.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/racecond.c.i
-.PHONY : racecond.c.i
-
-racecond.s: racecond.c.s
-.PHONY : racecond.s
-
-# target to generate assembly for a file
-racecond.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MutualExclusion.dir/build.make CMakeFiles/MutualExclusion.dir/racecond.c.s
-.PHONY : racecond.c.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -186,12 +210,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... MutualExclusion"
+	@echo "... bounded_buffer_problem.o"
+	@echo "... bounded_buffer_problem.i"
+	@echo "... bounded_buffer_problem.s"
+	@echo "... critical_section_problem.o"
+	@echo "... critical_section_problem.i"
+	@echo "... critical_section_problem.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... racecond.o"
-	@echo "... racecond.i"
-	@echo "... racecond.s"
 .PHONY : help
 
 

@@ -1,8 +1,10 @@
 #include <stdio.h>
-#include "racecond.h"
+#include "critical_section_problem.h"
+#include "bounded_buffer_problem.h"
 
 int main(void) {
-    printf("Hello, World!\n");
-    thread_deploy();
+    // thread_deploy();
+    produce_consume();
+
     return 0;
 }
