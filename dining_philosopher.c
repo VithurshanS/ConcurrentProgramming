@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdint.h>
 #define CHANCE 100 //each philosopher will get this many chances so expectation is they should eat at this times
 #define MS 100000
 
@@ -74,7 +75,7 @@ pthread_mutex_t forks[5];
 int eatcount[5] = {0};
 
 void* philosopherAction(void* arg) {
-    int pid = (int)arg;
+    int pid = (int)(intptr_t)arg;
     int chance =CHANCE;
     while (chance-->0) {
         struct timespec ts;
@@ -113,7 +114,7 @@ void* philosopherAction(void* arg) {
 }
 
 void* philosopherAction_livelock(void* arg) {
-    int pid = (int)arg;
+    int pid = (int)(intptr_t)arg;
     int chance = CHANCE;
     while (chance-->0) {
         struct timespec ts;
@@ -165,7 +166,7 @@ void diningPhilosopher()
         pthread_mutex_init(&forks[i], NULL);
     }
     for (int i = 0; i < 5; i++) {
-        pthread_create(&philosopher[i], NULL, philosopherAction, (void*)i);
+        pthread_create(&philosopher[i], NULL, philosopherAction, (void*)(intptr_t)i);
     }
     for (int i = 0; i < 5; i++) {
         pthread_join(philosopher[i], NULL);

@@ -6,6 +6,7 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <threads.h>
+#include <stdint.h>
 #define THREAD_COUNT 10
 
 long shared_counter = 0;
@@ -17,7 +18,7 @@ pthread_mutex_t mutex_b = PTHREAD_MUTEX_INITIALIZER;
 
 
 void* increment(void* arg) {
-    int tid = (int)arg;
+    int tid = (int)(intptr_t)arg;
     pthread_mutex_lock(&mutex_a);
     printf("INCREMENT thread id : %d ACQUIRED the lock for mutex_a\n", tid);
     for (int j=0;j<1'000'000;j++) {
@@ -32,7 +33,7 @@ void* increment(void* arg) {
 }
 // for dead lock
 void* increment_d(void* arg) {
-    int tid = (int)arg;
+    int tid = (int)(intptr_t)arg;
     pthread_mutex_lock(&mutex_a);
     printf("INCREMENT thread id : %d ACQUIRED the lock for mutex_a\n", tid);
     pthread_mutex_lock(&mutex_b);
@@ -52,7 +53,7 @@ void* increment_d(void* arg) {
 
 
 void* decrement_d(void* arg) {
-    int tid = (int)arg;
+    int tid = (int)(intptr_t)arg;
     pthread_mutex_lock(&mutex_b);
     printf("DECREMENT thread id : %d ACQUIRED the lock for mutex_b\n", tid);
     pthread_mutex_lock(&mutex_a);
@@ -72,7 +73,7 @@ void* decrement_d(void* arg) {
 
 //increment 2 for check starvation
 void* increment2(void* arg) {
-    int tid = (int)arg;
+    int tid = (int)(intptr_t)arg;
     for (int k = 0;k<20;k++) {
         pthread_mutex_lock(&mutex_a);
         printf("thread_id %d ACQUIRED the lock for %d th time\n",tid,k);
@@ -94,8 +95,8 @@ void thread_deploy() {
     pthread_t threads[THREAD_COUNT];
     pthread_t dec_threads[THREAD_COUNT];
     for (int i = 0; i < THREAD_COUNT; i++) {
-        pthread_create(&threads[i], NULL, increment_d, (void*)i);
-        pthread_create(&dec_threads[i], NULL, decrement_d, (void*)i);
+        pthread_create(&threads[i], NULL, increment_d, (void*)(intptr_t)i);
+        pthread_create(&dec_threads[i], NULL, decrement_d, (void*)(intptr_t)i);
     }
     for (int i = 0; i < THREAD_COUNT; i++) {
         pthread_join(threads[i], NULL);

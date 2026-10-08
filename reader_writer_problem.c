@@ -6,6 +6,7 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <time.h>
+#include <stdint.h>
 #define WRITER_WAIT_FOR 100000
 #define NUM_READERS 4
 #define NUM_WRITERS 4
@@ -22,7 +23,7 @@ BankDB db = {500,500};
 // data inconsistency problem - coonsistency target is total ammount of DB which is 1000
 void* reader(void* arg) {
     // Read from the database
-    int tid = (int)arg;
+    int tid = (int)(intptr_t)arg;
     int iteration = ITERATION;
     while (iteration-- > 0) {
         int a = db.account_A;
@@ -37,7 +38,7 @@ void* reader(void* arg) {
 
 void* writer(void* arg) {
     // Write to the database
-    int tid = (int)arg;
+    int tid = (int)(intptr_t)arg;
     struct timespec ts;
     ts.tv_sec = 0;
     ts.tv_nsec = 10*WRITER_WAIT_FOR;
@@ -59,7 +60,7 @@ void* writer(void* arg) {
 pthread_mutex_t writer_lock = PTHREAD_MUTEX_INITIALIZER;
 void* reader_mutex_v1(void* arg) {
     // Read from the database
-    int tid = (int)arg;
+    int tid = (int)(intptr_t)arg;
     int iteration = ITERATION;
     while (iteration-- > 0) {
         pthread_mutex_lock(&writer_lock); //writer should not come when reader on its critical section but unfortunately it wiil apply to peer readers also
@@ -76,7 +77,7 @@ void* reader_mutex_v1(void* arg) {
 
 void* writer_mutex_v1(void* arg) {
     // Write to the database
-    int tid = (int)arg;
+    int tid = (int)(intptr_t)arg;
     struct timespec ts;
     ts.tv_sec = 0;
     ts.tv_nsec = 10*WRITER_WAIT_FOR;
@@ -104,10 +105,10 @@ void readerWriterProblem() {
     pthread_t writers[NUM_WRITERS];
     for (int i=0;i<MAX(NUM_READERS, NUM_WRITERS);i++) {
         if (i < NUM_WRITERS) {
-            pthread_create(&writers[i], NULL, writer_mutex_v1, (void*)i);
+            pthread_create(&writers[i], NULL, writer_mutex_v1, (void*)(intptr_t)(i));
         }
         if (i < NUM_READERS) {
-            pthread_create(&readers[i], NULL, reader_mutex_v1, (void*)i);
+            pthread_create(&readers[i], NULL, reader_mutex_v1, (void*)(intptr_t)(i));
         }
 
     }

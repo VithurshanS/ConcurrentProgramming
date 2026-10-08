@@ -6,6 +6,7 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <time.h>
+#include <stdint.h>
 
 #define N_PRODUCERS 20
 #define N_CONSUMERS 20
@@ -31,7 +32,7 @@ void produce(void *arg) {
     struct timespec ts;
     ts.tv_sec = WAIT_FOR;
     ts.tv_nsec = 0;
-    int tid = (int)arg;
+    int tid = (int)(intptr_t)arg;
     while (true) {
         pthread_mutex_lock(&producer_lock);
         int item = ++item_counter;
@@ -42,7 +43,7 @@ void produce(void *arg) {
         tail = (tail + 1) % BUFFER_SIZE;
         printf("Producer %d Produced item: %d\n",tid, item);
         pthread_mutex_unlock(&producer_lock);
-        nanosleep(&ts, NULL);
+        nanosleep(&ts, nullptr);
     }
 
 }
@@ -56,7 +57,7 @@ void consume(void *arg) {
         int item = buffer[head];
         buffer[head] = 0;
         head = (head + 1) % BUFFER_SIZE;
-        printf("Consumer %d Consumed item: %d\n", (int)arg, item);
+        printf("Consumer %d Consumed item: %d\n", (int)(intptr_t)arg, item);
         pthread_mutex_unlock(&consumer_lock);
         if (item>0&& item<MAX_ITEMS) {
             consumed_items[item]++;
@@ -64,10 +65,10 @@ void consume(void *arg) {
                 printf(" BUG! Item %d consumed %d TIMES!\n", item, consumed_items[item]);
             }
         }else if (item == 0) {
-            printf(" BUG! Consumer %d consumed an EMPTY slot (0)!\n", (int)arg);
+            printf(" BUG! Consumer %d consumed an EMPTY slot (0)!\n", (int)(intptr_t)arg);
         }
 
-        nanosleep(&ts, NULL);
+        nanosleep(&ts, nullptr);
     }
     // Implementation for consuming items
 }
@@ -78,7 +79,7 @@ void produce_v1(void *arg) {
     struct timespec ts;
     ts.tv_sec = WAIT_FOR;
     ts.tv_nsec = 0;
-    int tid = (int)arg;
+    int tid = (int)(intptr_t)arg;
     int cont_wait = 0;
     int run_for = RUN_FOR;
     while (run_for>0) {
@@ -87,7 +88,7 @@ void produce_v1(void *arg) {
         if (buffer[tail] != 0) {
             printf("Producer %d: Buffer is full, waiting for consumption as %d th time \n", tid,++cont_wait);
             pthread_mutex_unlock(&producer_lock);
-            nanosleep(&ts, NULL);
+            nanosleep(&ts, nullptr);
             continue;
         }
         run_for--;
@@ -97,12 +98,12 @@ void produce_v1(void *arg) {
         tail = (tail + 1) % BUFFER_SIZE;
         printf("Producer %d Produced item: %d\n",tid, item);
         pthread_mutex_unlock(&producer_lock);
-        nanosleep(&ts, NULL);
+        nanosleep(&ts, nullptr);
     }
 
 }
 void consume_v1(void *arg) {
-    int tid = (int)arg;
+    int tid = (int)(intptr_t)arg;
     struct timespec ts;
     ts.tv_sec = WAIT_FOR;
     ts.tv_nsec = 0;
@@ -114,14 +115,14 @@ void consume_v1(void *arg) {
         if (item == 0) {
             printf("Consumer %d: Buffer slot is empty, waiting for production %d th time \n", tid,++cont_wait);
             pthread_mutex_unlock(&consumer_lock);
-            nanosleep(&ts, NULL);
+            nanosleep(&ts, nullptr);
             continue;
         }
         run_for--;
         cont_wait=0;
         buffer[head] = 0;
         head = (head + 1) % BUFFER_SIZE;
-        printf("Consumer %d Consumed item: %d\n", (int)arg, item);
+        printf("Consumer %d Consumed item: %d\n", (int)(intptr_t)arg, item);
         pthread_mutex_unlock(&consumer_lock);
         if (item>0&& item<MAX_ITEMS) {
             consumed_items[item]++;
@@ -130,7 +131,7 @@ void consume_v1(void *arg) {
             }
         }
 
-        nanosleep(&ts, NULL);
+        nanosleep(&ts, nullptr);
     }
     // Implementation for consuming items
 }
@@ -145,18 +146,18 @@ void produce_consume() {
     int lim = MAX(N_PRODUCERS, N_CONSUMERS);
     for (int i=0;i<lim;i++) {
         if (i < N_PRODUCERS) {
-            pthread_create(&producers[i], NULL, (void *)produce_v1, (void*)i);
+            pthread_create(&producers[i], nullptr, (void *)produce_v1, (void*)(intptr_t)i);
         }
         if (i < N_CONSUMERS) {
-            pthread_create(&consumers[i], NULL, (void *)consume_v1, (void*)i);
+            pthread_create(&consumers[i], nullptr, (void *)consume_v1, (void*)(intptr_t)i);
         }
     }
     for (int i=0;i<lim;i++) {
         if (i < N_PRODUCERS) {
-            pthread_join(producers[i], NULL);
+            pthread_join(producers[i], nullptr);
         }
         if (i < N_CONSUMERS) {
-            pthread_join(consumers[i], NULL);
+            pthread_join(consumers[i], nullptr);
         }
     }
     printf("final counter number is (total produced elements  %d",item_counter);
