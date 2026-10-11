@@ -8,18 +8,21 @@
 #include <time.h>
 #include <stdint.h>
 
-#define N_PRODUCERS 20
-#define N_CONSUMERS 20
+#define N_PRODUCERS 200
+#define N_CONSUMERS 200
 #define BUFFER_SIZE 5
 #define MAX_ITEMS 100000
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
-#define WAIT_FOR 1 //1 seconds
-#define RUN_FOR 100
+#define WAIT_FOR 0 //1 seconds
+#define RUN_FOR 100000
 
 
 
 pthread_mutex_t consumer_lock = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t producer_lock = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t unified_lock = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t not_empty_cond = PTHREAD_COND_INITIALIZER;
+pthread_cond_t not_full_cond = PTHREAD_COND_INITIALIZER;
 int item_counter = 0;
 int buffer[BUFFER_SIZE]={0};
 int consumed_items[MAX_ITEMS] = {0};
@@ -33,8 +36,10 @@ void produce(void *arg) {
     ts.tv_sec = WAIT_FOR;
     ts.tv_nsec = 0;
     int tid = (int)(intptr_t)arg;
-    while (true) {
+    int runfor = RUN_FOR;
+    while (runfor>0) {
         pthread_mutex_lock(&producer_lock);
+        runfor--;
         int item = ++item_counter;
         if (buffer[tail] != 0) {
             printf("Producer %d: Buffer is full, value over written \n", tid);
@@ -51,9 +56,10 @@ void consume(void *arg) {
     struct timespec ts;
     ts.tv_sec = WAIT_FOR;
     ts.tv_nsec = 0;
-
-    while (true) {
+    int runfor = RUN_FOR;
+    while (runfor>0) {
         pthread_mutex_lock(&consumer_lock);
+        runfor--;
         int item = buffer[head];
         buffer[head] = 0;
         head = (head + 1) % BUFFER_SIZE;
@@ -74,7 +80,7 @@ void consume(void *arg) {
 }
 
 // avoid over written and consumption of null items
-void produce_v1(void *arg) {
+void produce_v1(void *arg) { // and since we using the mutexes for producers and consumers . a value produced or consummed happen one by one and produce and consume can happen same time but individuly they ony get one chance at a time
     // Implementation for producing items
     struct timespec ts;
     ts.tv_sec = WAIT_FOR;
@@ -85,10 +91,10 @@ void produce_v1(void *arg) {
     while (run_for>0) {
         pthread_mutex_lock(&producer_lock);
 
-        if (buffer[tail] != 0) {
+        if (buffer[tail] != 0) { //busy waiting is to avoid buffer overflow
             printf("Producer %d: Buffer is full, waiting for consumption as %d th time \n", tid,++cont_wait);
             pthread_mutex_unlock(&producer_lock);
-            nanosleep(&ts, nullptr);
+            //nanosleep(&ts, nullptr); // i thought if i comment this out we might see a livelock but that doesnt true because here we were using 2 different locks so progress eventually happen on doesnt (consumer lock) affect producer
             continue;
         }
         run_for--;
@@ -115,7 +121,7 @@ void consume_v1(void *arg) {
         if (item == 0) {
             printf("Consumer %d: Buffer slot is empty, waiting for production %d th time \n", tid,++cont_wait);
             pthread_mutex_unlock(&consumer_lock);
-            nanosleep(&ts, nullptr);
+            // nanosleep(&ts, nullptr);
             continue;
         }
         run_for--;
@@ -124,6 +130,75 @@ void consume_v1(void *arg) {
         head = (head + 1) % BUFFER_SIZE;
         printf("Consumer %d Consumed item: %d\n", (int)(intptr_t)arg, item);
         pthread_mutex_unlock(&consumer_lock);
+        if (item>0&& item<MAX_ITEMS) {
+            consumed_items[item]++;
+            if (consumed_items[item]> 1) {
+                printf(" BUG! Item %d consumed %d TIMES!\n", item, consumed_items[item]);
+            }
+        }
+
+        nanosleep(&ts, nullptr);
+    }
+    // Implementation for consuming items
+}
+
+
+// avoid over written and consumption of null items
+void produce_v2(void *arg) {
+    // Implementation for producing items
+    struct timespec ts;
+    ts.tv_sec = WAIT_FOR;
+    ts.tv_nsec = 0;
+    int tid = (int)(intptr_t)arg;
+    int cont_wait = 0;
+    int run_for = RUN_FOR;
+    while (run_for>0) {
+        pthread_mutex_lock(&unified_lock);
+
+        while (buffer[tail] != 0) { //busy waiting is to avoid buffer overflow
+            printf("Producer %d: Buffer is full, waiting for consumption as %d th time \n", tid,++cont_wait);
+            pthread_cond_wait(&not_full_cond,&unified_lock);
+            // pthread_mutex_unlock(&producer_lock);
+            // nanosleep(&ts, nullptr); // i thought if i comment this out we might see a livelock but that doesnt true because here we were using 2 different locks so progress eventually happen on doesnt (consumer lock) affect producer
+            // continue;
+        }
+        run_for--;
+        cont_wait = 0;
+        int item = ++item_counter;
+        buffer[tail] = item;
+        tail = (tail + 1) % BUFFER_SIZE;
+        printf("Producer %d Produced item: %d\n",tid, item);
+        pthread_cond_signal(&not_empty_cond);
+        pthread_mutex_unlock(&unified_lock);
+        nanosleep(&ts, nullptr);
+    }
+
+}
+void consume_v2(void *arg) {
+    int tid = (int)(intptr_t)arg;
+    struct timespec ts;
+    ts.tv_sec = WAIT_FOR;
+    ts.tv_nsec = 0;
+    int cont_wait = 0;
+    int run_for = RUN_FOR;
+    while (run_for>0) {
+        pthread_mutex_lock(&unified_lock);
+        //int item = buffer[head];
+        while (buffer[head] == 0) {
+            printf("Consumer %d: Buffer slot is empty, waiting for production %d th time \n", tid,++cont_wait);
+            pthread_cond_wait(&not_empty_cond,&unified_lock);
+            // pthread_mutex_unlock(&consumer_lock);
+            // nanosleep(&ts, nullptr);
+            // continue;
+        }
+        int item = buffer[head];
+        run_for--;
+        cont_wait=0;
+        buffer[head] = 0;
+        head = (head + 1) % BUFFER_SIZE;
+        printf("Consumer %d Consumed item: %d\n", (int)(intptr_t)arg, item);
+        pthread_cond_signal(&not_full_cond);
+        pthread_mutex_unlock(&unified_lock);
         if (item>0&& item<MAX_ITEMS) {
             consumed_items[item]++;
             if (consumed_items[item]> 1) {
@@ -146,10 +221,10 @@ void produce_consume() {
     int lim = MAX(N_PRODUCERS, N_CONSUMERS);
     for (int i=0;i<lim;i++) {
         if (i < N_PRODUCERS) {
-            pthread_create(&producers[i], nullptr, (void *)produce_v1, (void*)(intptr_t)i);
+            pthread_create(&producers[i], nullptr, (void *)produce_v2, (void*)(intptr_t)i);
         }
         if (i < N_CONSUMERS) {
-            pthread_create(&consumers[i], nullptr, (void *)consume_v1, (void*)(intptr_t)i);
+            pthread_create(&consumers[i], nullptr, (void *)consume_v2, (void*)(intptr_t)i);
         }
     }
     for (int i=0;i<lim;i++) {
@@ -167,5 +242,7 @@ void produce_consume() {
             non_zero_element_count++;
         }
     }
+    pthread_cond_destroy(&not_empty_cond);
+    pthread_cond_destroy(&not_full_cond);
     printf(", non-zero elements: %d)\n", non_zero_element_count);
 }

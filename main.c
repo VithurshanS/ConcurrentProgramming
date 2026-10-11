@@ -6,9 +6,8 @@
 
 int main(void) {
     // thread_deploy();
-    // produce_consume();
-    // boundedBufferProblem();
+    produce_consume();
     // diningPhilosopher();
-    readerWriterProblem();
+    // readerWriterProblem();
     return 0;
 }

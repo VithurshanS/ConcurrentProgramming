@@ -11,4 +11,5 @@ add_executable(MutualExclusion main.c
         dining_philosopher.c
         dining_philosopher.h
         reader_writer_problem.c
-        reader_writer_problem.h)
+        reader_writer_problem.h
+)
